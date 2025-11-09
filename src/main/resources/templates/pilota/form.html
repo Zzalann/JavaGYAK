@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: content">
+<body>
+<h2>Pilóta űrlap</h2>
+<form th:action="@{/pilota/ment}" th:object="${p}" method="post">
+    <label>Az:</label> <input th:field="*{az}" required><br>
+    <label>Név:</label> <input th:field="*{nev}" required><br>
+    <label>Nem (F/N):</label> <input th:field="*{nem}" maxlength="1"><br>
+    <label>Szül. dátum (YYYY-MM-DD):</label> <input th:field="*{szuldat}" placeholder="1990-01-01"><br>
+    <label>Nemzet:</label> <input th:field="*{nemzet}"><br>
+    <button type="submit">Mentés</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body})}">
+<body>
+
+<section id="banner">
+    <div class="content">
+        <header>
+            <h1>Üdv a Forma–1 adatbázisban!</h1>
+        </header>
+        <p>
+            Ez az oldal betekintést nyújt a Forma–1 világába:
+            böngéssz a pilóták között, nézd meg a futamokat, vagy tekintsd meg a diagramokat.
+        </p>
+        <ul class="actions">
+            <li><a th:href="@{/adatbazis}" class="button big">👉 Adatbázis megnyitása</a></li>
+        </ul>
+    </div>
+    <span class="image object">
+        <img th:src="@{/images/f1car.jpg}" alt="Forma 1 autó">
+    </span>
+</section>
+
+</body>
+</html>

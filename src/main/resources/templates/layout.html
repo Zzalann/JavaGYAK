@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+    <base href="/" />
+    <meta charset="UTF-8">
+    <title th:text="${title} ?: 'Forma–1 Adatbázis'">Forma–1 Adatbázis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+<div id="wrapper">
+
+    <section id="sidebar">
+        <div class="inner">
+            <nav>
+                <ul>
+                    <li><a href="/">Főoldal</a></li>
+                    <li><a href="/adatbazis">Adatbázis</a></li>
+                    <li><a href="/pilota">Pilóták (CRUD)</a></li>
+                    <li><a href="/diagram">Diagram</a></li>
+                    <li><a href="/kapcsolat">Kapcsolat</a></li>
+                    <li><a href="/uzenetek">Üzenetek</a></li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <div id="main">
+        <div class="inner">
+
+            <div th:insert="${content}"></div>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/browser.min.js"></script>
+<script src="/assets/js/breakpoints.min.js"></script>
+<script src="/assets/js/util.js"></script>
+<script src="/assets/js/main.js"></script>
+
+</body>
+</html>

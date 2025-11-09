@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body})}">
+<body>
+
+<h1>Adatbázis</h1>
+
+<h2>Pilóták</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Az</th>
+        <th>Név</th>
+        <th>Nem</th>
+        <th>Nemzet</th>
+        <th>Születési dátum</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${pilotak}">
+        <td th:text="${p.az}"></td>
+        <td th:text="${p.nev}"></td>
+        <td th:text="${p.nem}"></td>
+        <td th:text="${p.nemzet}"></td>
+        <td th:text="${p.szuldat}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Versenyek</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Dátum</th>
+        <th>Helyszín</th>
+        <th>Név</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="g : ${gpLista}">
+        <td th:text="${g.datum}"></td>
+        <td th:text="${g.helyszin}"></td>
+        <td th:text="${g.nev}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Eredmények</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Pilóta AZ</th>
+        <th>Csapat</th>
+        <th>Helyezés</th>
+        <th>Hiba</th>
+        <th>Típus</th>
+        <th>Dátum</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="e : ${eredmenyek}">
+        <td th:text="${e.id}"></td>
+        <td th:text="${e.pilotaAz}"></td>
+        <td th:text="${e.csapat}"></td>
+        <td th:text="${e.helyezes}"></td>
+        <td th:text="${e.hiba}"></td>
+        <td th:text="${e.tipus}"></td>
+        <td th:text="${e.datum}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

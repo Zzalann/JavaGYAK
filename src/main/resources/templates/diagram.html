@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body})}">
+<body>
+
+<h2>GP helyezések</h2>
+<canvas id="chart" width="900" height="500"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const grouped = JSON.parse(/*[[${rowsJson}]]*/ '{}');
+    console.log("Grouped data:", grouped);
+
+    const labels = new Set();
+    const datasets = [];
+
+    Object.entries(grouped).forEach(([datum, rows]) => {
+        const dataMap = {};
+        rows.forEach(r => {
+            labels.add(r.csapat || ('Pilóta #' + r.pilotaAz));
+            dataMap[r.csapat || ('Pilóta #' + r.pilotaAz)] = r.helyezes || 0;
+        });
+
+        const allLabels = Array.from(labels);
+        const data = allLabels.map(label => dataMap[label] ?? null);
+
+        datasets.push({
+            label: `GP ${datum}`,
+            data,
+            backgroundColor: `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`
+        });
+    });
+
+    new Chart(document.getElementById("chart"), {
+        type: 'bar',
+        data: {
+            labels: Array.from(labels),
+            datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Forma–1 – Helyezések'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    reverse: false,
+                    title: { display: true, text: 'Helyezés' }
+                },
+                x: {
+                    title: { display: true, text: 'Csapatok / Pilóták' }
+                }
+            }
+        }
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

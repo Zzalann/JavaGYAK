@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body})}">
+<body>
+
+<h1>Kapcsolat</h1>
+
+<form th:action="@{/kapcsolat}" method="post">
+    <label>Név:
+        <input type="text" name="nev" required>
+    </label><br>
+    <label>Üzenet:
+        <textarea name="uzenet" required></textarea>
+    </label><br>
+    <button type="submit">Küldés</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body})}">
+<body>
+
+<section>
+    <header class="main">
+        <h1>Bejelentkezés</h1>
+    </header>
+    <form th:action="@{/login}" method="post">
+        <div class="fields">
+            <div class="field">
+                <label>Felhasználónév</label>
+                <input type="text" name="username" value="user">
+            </div>
+            <div class="field">
+                <label>Jelszó</label>
+                <input type="password" name="password">
+            </div>
+        </div>
+        <ul class="actions">
+            <li><input type="submit" value="Belépés" class="primary"></li>
+        </ul>
+    </form>
+</section>
+
+</body>
+</html>
