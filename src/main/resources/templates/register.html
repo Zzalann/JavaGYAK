@@ -5,10 +5,10 @@
 
 <section>
     <div class="content" style="max-width: 400px; margin: 0 auto; text-align: center;">
-        <h2>Bejelentkezés</h2>
-        <p>Kérlek, add meg a felhasználóneved és jelszavad a belépéshez.</p>
+        <h2>Regisztráció</h2>
+        <p>Hozz létre egy új fiókot a bejelentkezéshez.</p>
 
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/register}" method="post">
             <div>
                 <label>Felhasználónév</label>
                 <input type="text" name="username" required>
@@ -18,16 +18,15 @@
                 <input type="password" name="password" required>
             </div>
             <div style="margin-top: 1em;">
-                <button type="submit" class="button primary">Bejelentkezés</button>
+                <button type="submit" class="button primary">Regisztráció</button>
             </div>
         </form>
 
-        <p th:if="${param.error}" style="color:red;">Hibás felhasználónév vagy jelszó!</p>
-        <p th:if="${param.logout}" style="color:green;">Sikeres kijelentkezés!</p>
+        <p th:if="${param.success}" style="color:green;">Sikeres regisztráció! Jelentkezz be.</p>
 
         <hr>
 
-        <a th:href="@{/register}" class="button">Regisztráció</a>
+        <a th:href="@{/login}" class="button">Vissza a bejelentkezéshez</a>
     </div>
 </section>
 

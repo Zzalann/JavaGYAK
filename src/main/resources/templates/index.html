@@ -8,14 +8,40 @@
         <header>
             <h1>Üdv a Forma–1 adatbázisban!</h1>
         </header>
+
+        <div th:if="${#authorization.expression('isAuthenticated()')}">
+            <p>
+                Sikeresen bejelentkeztél,
+                <strong th:text="${#authentication.name}">felhasználó</strong>!
+            </p>
+
+            <p>
+                Szerepkör:
+                <span th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+                      style="color:darkred; font-weight:bold;">Adminisztrátor</span>
+                <span th:if="${#authorization.expression('hasRole(''USER'')')}"
+                      style="color:darkblue; font-weight:bold;">Felhasználó</span>
+            </p>
+
+            <ul class="actions">
+                <li><a th:href="@{/logout}" class="button small">🚪 Kijelentkezés</a></li>
+            </ul>
+        </div>
+
+        <div th:if="${!#authorization.expression('isAuthenticated()')}">
+            <p>Kérlek <a th:href="@{/login}">jelentkezz be</a> a további funkciókhoz.</p>
+        </div>
+
         <p>
             Ez az oldal betekintést nyújt a Forma–1 világába:
             böngéssz a pilóták között, nézd meg a futamokat, vagy tekintsd meg a diagramokat.
         </p>
+
         <ul class="actions">
             <li><a th:href="@{/adatbazis}" class="button big">👉 Adatbázis megnyitása</a></li>
         </ul>
     </div>
+
     <span class="image object">
         <img th:src="@{/images/f1car.jpg}" alt="Forma 1 autó">
     </span>

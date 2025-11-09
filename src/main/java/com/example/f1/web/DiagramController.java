@@ -23,7 +23,6 @@ public class DiagramController {
     public String diagram(Model m) throws Exception {
         var all = eredmenyRepo.findAll();
 
-        // dátum szerint csoportosítás (null-biztos verzió)
         Map<String, List<Map<String, Object>>> grouped = all.stream()
                 .filter(e -> e.getDatum() != null) // csak ahol van dátum
                 .collect(Collectors.groupingBy(
