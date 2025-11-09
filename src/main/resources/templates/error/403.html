@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body})}">
+<body>
+<section>
+    <h2>403 – Nincs jogosultság</h2>
+    <p>Ehhez az oldalhoz <strong>admin jogosultság</strong> szükséges.</p>
+    <p><a th:href="@{/}">Vissza a főoldalra</a></p>
+</section>
+</body>
+</html>

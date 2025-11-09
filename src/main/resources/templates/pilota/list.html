@@ -1,22 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: content">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body})}">
 <body>
-<h2>Pilóta CRUD</h2>
-<a th:href="@{/pilota/uj}">+ Új pilóta</a>
-<table>
-    <tr><th>Az</th><th>Név</th><th>Nem</th><th>Nemzet</th><th>Művelet</th></tr>
-    <tr th:each="p : ${list}">
-        <td th:text="${p.az}"></td>
-        <td th:text="${p.nev}"></td>
-        <td th:text="${p.nem}"></td>
-        <td th:text="${p.nemzet}"></td>
-        <td>
-            <a th:href="@{'/pilota/szerk/' + ${p.az}}">Szerk</a>
-            <form th:action="@{'/pilota/torol/' + ${p.az}}" method="post" style="display:inline">
-                <button type="submit">Töröl</button>
-            </form>
-        </td>
-    </tr>
-</table>
+
+<section>
+    <header class="major">
+        <h2>Pilóta CRUD</h2>
+    </header>
+
+    <ul class="actions">
+        <li>
+            <a th:href="@{/pilota/uj}" class="button primary icon solid fa-plus">
+                Új pilóta
+            </a>
+        </li>
+    </ul>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>Az</th>
+                <th>Név</th>
+                <th>Nem</th>
+                <th>Nemzet</th>
+                <th>Művelet</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${list}">
+                <td th:text="${p.az}"></td>
+                <td th:text="${p.nev}"></td>
+                <td th:text="${p.nem}"></td>
+                <td th:text="${p.nemzet}"></td>
+                <td>
+                    <a th:href="@{'/pilota/szerk/' + ${p.az}}" class="button small">
+                        ✏️ Szerk
+                    </a>
+                    <form th:action="@{'/pilota/torol/' + ${p.az}}" method="post" style="display:inline">
+                        <button type="submit" class="button small">🗑️ Töröl</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
 </body>
 </html>

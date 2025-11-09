@@ -1,14 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: content">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body})}">
 <body>
-<h2>Pilóta űrlap</h2>
-<form th:action="@{/pilota/ment}" th:object="${p}" method="post">
-    <label>Az:</label> <input th:field="*{az}" required><br>
-    <label>Név:</label> <input th:field="*{nev}" required><br>
-    <label>Nem (F/N):</label> <input th:field="*{nem}" maxlength="1"><br>
-    <label>Szül. dátum (YYYY-MM-DD):</label> <input th:field="*{szuldat}" placeholder="1990-01-01"><br>
-    <label>Nemzet:</label> <input th:field="*{nemzet}"><br>
-    <button type="submit">Mentés</button>
-</form>
+
+<section>
+    <header class="major">
+        <h2>Pilóta űrlap</h2>
+    </header>
+
+    <form th:action="@{/pilota/ment}" th:object="${p}" method="post" class="fields">
+        <div class="field half">
+            <label>Azonosító:</label>
+            <input th:field="*{az}" type="number" required />
+        </div>
+
+        <div class="field">
+            <label>Név:</label>
+            <input th:field="*{nev}" type="text" required />
+        </div>
+
+        <div class="field half">
+            <label>Nem (F/N):</label>
+            <input th:field="*{nem}" maxlength="1" placeholder="F vagy N" />
+        </div>
+
+        <div class="field half">
+            <label>Szül. dátum:</label>
+            <input th:field="*{szuldat}" type="date" placeholder="1990-01-01" />
+        </div>
+
+        <div class="field">
+            <label>Nemzet:</label>
+            <input th:field="*{nemzet}" type="text" />
+        </div>
+
+        <ul class="actions">
+            <li><button type="submit" class="button primary">💾 Mentés</button></li>
+            <li><a th:href="@{/adatbazis}" class="button">Mégse</a></li>
+        </ul>
+    </form>
+</section>
+
 </body>
 </html>
