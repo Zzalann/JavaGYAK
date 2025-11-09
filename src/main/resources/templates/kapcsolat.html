@@ -3,17 +3,31 @@
       th:replace="~{layout :: layout(~{::body})}">
 <body>
 
-<h1>Kapcsolat</h1>
+<section>
+    <header class="major">
+        <h2>Kapcsolatfelvétel</h2>
+    </header>
 
-<form th:action="@{/kapcsolat}" method="post">
-    <label>Név:
-        <input type="text" name="nev" required>
-    </label><br>
-    <label>Üzenet:
-        <textarea name="uzenet" required></textarea>
-    </label><br>
-    <button type="submit">Küldés</button>
-</form>
+    <p>Ha kérdésed vagy észrevételed van, írd meg nekünk!</p>
+
+    <div th:if="${success}">
+        <p style="color:green;">✅ Üzenet elküldve!</p>
+    </div>
+
+    <form th:action="@{/kapcsolat}" th:object="${message}" method="post" class="fields">
+        <div class="field">
+            <label>Név:</label>
+            <input th:field="*{nev}" type="text" placeholder="Írd be a neved" required />
+        </div>
+        <div class="field">
+            <label>Üzenet:</label>
+            <textarea th:field="*{uzenet}" rows="6" placeholder="Írd ide az üzeneted..." required></textarea>
+        </div>
+        <ul class="actions">
+            <li><button type="submit" class="button primary">📨 Küldés</button></li>
+        </ul>
+    </form>
+</section>
 
 </body>
 </html>

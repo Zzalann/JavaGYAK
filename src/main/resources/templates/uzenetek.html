@@ -3,26 +3,30 @@
       th:replace="~{layout :: layout(~{::body})}">
 <body>
 
-<h1>Beérkezett üzenetek</h1>
+<section>
+    <header class="major">
+        <h2>Beérkezett üzenetek</h2>
+    </header>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Név</th>
-        <th>Üzenet</th>
-        <th>Dátum</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="uzenet : ${uzenetek}">
-        <td th:text="${uzenet.id}"></td>
-        <td th:text="${uzenet.nev}"></td>
-        <td th:text="${uzenet.szoveg}"></td>
-        <td th:text="${uzenet.datum}"></td>
-    </tr>
-    </tbody>
-</table>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Név</th>
+                <th>Üzenet</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="m : ${messages}">
+                <td th:text="${m.id}"></td>
+                <td th:text="${m.nev}"></td>
+                <td th:text="${m.uzenet}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
 
 </body>
 </html>
