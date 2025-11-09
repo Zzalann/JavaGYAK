@@ -1,6 +1,7 @@
 package com.example.f1;
 
 import com.example.f1.repo.UserRepo;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,7 +30,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/register", "/assets/**", "/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/pilota/**").hasRole("ADMIN")
+                        .requestMatchers("/pilota/**","/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
