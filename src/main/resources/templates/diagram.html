@@ -3,62 +3,43 @@
       th:replace="~{layout :: layout(~{::body})}">
 <body>
 
-<h2>GP helyezések</h2>
-<canvas id="chart" width="900" height="500"></canvas>
+<h2>Csapatonkénti átlagos helyezés</h2>
+<canvas id="chart" width="800" height="400"></canvas>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    const grouped = JSON.parse(/*[[${rowsJson}]]*/ '{}');
-    console.log("Grouped data:", grouped);
-
-    const labels = new Set();
-    const datasets = [];
-
-    Object.entries(grouped).forEach(([datum, rows]) => {
-        const dataMap = {};
-        rows.forEach(r => {
-            labels.add(r.csapat || ('Pilóta #' + r.pilotaAz));
-            dataMap[r.csapat || ('Pilóta #' + r.pilotaAz)] = r.helyezes || 0;
-        });
-
-        const allLabels = Array.from(labels);
-        const data = allLabels.map(label => dataMap[label] ?? null);
-
-        datasets.push({
-            label: `GP ${datum}`,
-            data,
-            backgroundColor: `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`
-        });
-    });
+    const labels = /*[[${csapatok}]]*/ [];
+    const data = /*[[${atlagok}]]*/ [];
 
     new Chart(document.getElementById("chart"), {
-        type: 'bar',
-        data: {
-            labels: Array.from(labels),
-            datasets
-        },
-        options: {
-            responsive: true,
+          type: 'bar',
+          data: { labels, datasets: [{ label: 'Átlagos helyezés', data }] },
+          options: {
+            indexAxis: 'y',          // <-- vízszintes oszlopok
             plugins: {
-                title: {
-                    display: true,
-                    text: 'Forma–1 – Helyezések'
+              legend: { display: false },
+              title: { display: true, text: 'Forma–1 — Csapatonkénti átlagos helyezések' },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => `Átlag: ${ctx.parsed.x?.toFixed(2) ?? ctx.parsed.y?.toFixed(2)}`
                 }
+              }
             },
             scales: {
-                y: {
-                    beginAtZero: true,
-                    reverse: false,
-                    title: { display: true, text: 'Helyezés' }
-                },
-                x: {
-                    title: { display: true, text: 'Csapatok / Pilóták' }
-                }
+              x: {
+                beginAtZero: true,
+                suggestedMax: 25,
+                ticks: { stepSize: 1 },
+                title: { display: true, text: 'Átlagos helyezés (minél kisebb, annál jobb)' }
+              },
+              y: { title: { display: true, text: 'Csapatok' } }
             }
-        }
-    });
+          }
+        });
+
     /*]]>*/
 </script>
+
 </body>
 </html>

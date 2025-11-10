@@ -1,7 +1,6 @@
 package com.example.f1.web;
 
 import com.example.f1.repo.EredmenyRepo;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,33 +10,35 @@ import java.util.stream.Collectors;
 
 @Controller
 public class DiagramController {
-    private final EredmenyRepo eredmenyRepo;
-    private final ObjectMapper objectMapper;
 
-    public DiagramController(EredmenyRepo eredmenyRepo, ObjectMapper objectMapper) {
+    private final EredmenyRepo eredmenyRepo;
+
+    public DiagramController(EredmenyRepo eredmenyRepo) {
         this.eredmenyRepo = eredmenyRepo;
-        this.objectMapper = objectMapper;
     }
 
     @GetMapping("/diagram")
-    public String diagram(Model m) throws Exception {
-        var all = eredmenyRepo.findAll();
+    public String diagram(Model model) {
+        var eredmenyek = eredmenyRepo.findAll();
 
-        Map<String, List<Map<String, Object>>> grouped = all.stream()
-                .filter(e -> e.getDatum() != null) // csak ahol van dátum
+        // Csapatonként átlagos helyezés számítása, null-ok és 0-ok kizárásával
+        Map<String, Double> atlagok = eredmenyek.stream()
+                .filter(e -> e.getHelyezes() != null && e.getHelyezes() > 0)
                 .collect(Collectors.groupingBy(
-                        e -> e.getDatum().toString(),
-                        Collectors.mapping(e -> {
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("pilotaAz", e.getPilotaAz());
-                            map.put("helyezes", e.getHelyezes());
-                            map.put("csapat", e.getCsapat() != null ? e.getCsapat() : "Ismeretlen");
-                            return map;
-                        }, Collectors.toList())
+                        e -> e.getCsapat(),
+                        Collectors.averagingDouble(e -> e.getHelyezes())
                 ));
 
-        String json = objectMapper.writeValueAsString(grouped);
-        m.addAttribute("rowsJson", json);
+        // Rendezett lista (legjobb csapatok elöl)
+        var rendezett = atlagok.entrySet().stream()
+                .filter(entry -> entry.getValue() > 0) // 🔹 csak pozitív átlagok
+                .sorted(Map.Entry.comparingByValue())
+                .toList();
+
+        model.addAttribute("csapatok", rendezett.stream().map(Map.Entry::getKey).toList());
+        model.addAttribute("atlagok", rendezett.stream().map(Map.Entry::getValue).toList());
+
         return "diagram";
     }
+
 }
