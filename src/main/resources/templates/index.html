@@ -3,48 +3,144 @@
       th:replace="~{layout :: layout(~{::body})}">
 <body>
 
-<section id="banner">
+<section id="banner" class="f1-hero">
+
+    <!-- Bal oldali tartalom -->
     <div class="content">
-        <header>
+
+        <header class="hero-header">
+            <p class="hero-kicker">🏁 Interaktív Forma–1 adatbázis</p>
             <h1>Üdv a Forma–1 adatbázisban!</h1>
+            <p class="hero-subtitle">
+                Pilóták, csapatok, futamok és statisztikák egy helyen – ahogy egy igazi F1-rajongó megérdemli.
+            </p>
         </header>
 
-        <div th:if="${#authorization.expression('isAuthenticated()')}">
-            <p>
+        <!-- FELHASZNÁLÓ DOBOZ -->
+        <div class="user-box"
+             th:if="${#authorization.expression('isAuthenticated()')}">
+            <div class="user-box-header">
+                <span class="user-status-dot online"></span>
+                <span class="user-status-text">Bejelentkezve</span>
+            </div>
+
+            <p class="user-welcome">
                 Sikeresen bejelentkeztél,
                 <strong th:text="${#authentication.name}">felhasználó</strong>!
             </p>
 
-            <p>
+            <p class="user-role">
                 Szerepkör:
-                <span th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
-                      style="color:darkred; font-weight:bold;">Adminisztrátor</span>
-                <span th:if="${#authorization.expression('hasRole(''USER'')')}"
-                      style="color:darkblue; font-weight:bold;">Felhasználó</span>
+                <span class="role-badge role-admin"
+                      th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                    Adminisztrátor
+                </span>
+                <span class="role-badge role-user"
+                      th:if="${#authorization.expression('hasRole(''USER'')')}">
+                    Felhasználó
+                </span>
             </p>
 
-            <ul class="actions">
-                <li><a th:href="@{/logout}" class="button small">🚪 Kijelentkezés</a></li>
+            <ul class="actions user-actions">
+                <li><a th:href="@{/logout}" class="button small outline">🚪 Kijelentkezés</a></li>
             </ul>
         </div>
 
-        <div th:if="${!#authorization.expression('isAuthenticated()')}">
-            <p>Kérlek <a th:href="@{/login}">jelentkezz be</a> a további funkciókhoz.</p>
+        <!-- NEM BEJELENTKEZETT -->
+        <div class="user-box guest"
+             th:if="${!#authorization.expression('isAuthenticated()')}">
+            <div class="user-box-header">
+                <span class="user-status-dot offline"></span>
+                <span class="user-status-text">Nem vagy bejelentkezve</span>
+            </div>
+            <p>
+                Kérlek <a th:href="@{/login}">jelentkezz be</a>, hogy elérd az összes funkciót:
+                kedvenc pilóták, részletes statisztikák, extra diagramok. 🔐
+            </p>
         </div>
 
-        <p>
+        <!-- Rövid leírás -->
+        <p class="lead">
             Ez az oldal betekintést nyújt a Forma–1 világába:
             böngéssz a pilóták között, nézd meg a futamokat, vagy tekintsd meg a diagramokat.
         </p>
 
-        <ul class="actions">
-            <li><a th:href="@{/adatbazis}" class="button big">👉 Adatbázis megnyitása</a></li>
+        <!-- Gyors infó-sáv (simán maradhat statikus) -->
+        <div class="quick-stats">
+            <div class="quick-stat">
+                <span class="label">Pilóták</span>
+                <span class="value">20+</span>
+            </div>
+            <div class="quick-stat">
+                <span class="label">Csapatok</span>
+                <span class="value">10</span>
+            </div>
+            <div class="quick-stat">
+                <span class="label">Szezonok</span>
+                <span class="value">Több évtized</span>
+            </div>
+        </div>
+
+        <!-- NAVIGÁCIÓS CSEMPÉK -->
+        <div class="f1-grid">
+
+            <a th:href="@{/diagram}" class="f1-card">
+                <div class="card-icon">📈</div>
+                <h3>Diagramok</h3>
+                <p>Pilóták, csapatok, szezonok vizuális összehasonlítása interaktív grafikonokon.</p>
+                <span class="card-link">Megnyitás →</span>
+            </a>
+
+            <a th:href="@{/Kapcsolat}" class="f1-card">
+                <div class="card-icon">📬</div>
+                <h3>Kapcsolat</h3>
+                <p>Visszajelzés az oldalról, hibajelentés, vagy új funkciók ötletei számodra.</p>
+                <span class="card-link">Írj nekünk →</span>
+            </a>
+
+            <a th:href="@{/adatbazis}" class="f1-card">
+                <div class="card-icon">🗄️</div>
+                <h3>Adatbázis</h3>
+                <p>Pilóták, csapatok, futamok részletes adatokkal és szűrési lehetőségekkel.</p>
+                <span class="card-link">Adatok böngészése →</span>
+            </a>
+
+            <a th:href="@{/adatbazis/statisztikak}" class="f1-card">
+                <div class="card-icon">🏆</div>
+                <h3>Statisztikák</h3>
+                <p>Rekordok, győzelmek, pole-ok, dobogók – minden, ami számít a történelemben.</p>
+                <span class="card-link">Statisztikák →</span>
+            </a>
+        </div>
+
+        <!-- Fő CTA gomb -->
+        <ul class="actions main-action">
+            <li>
+                <a th:href="@{/adatbazis}" class="button big primary">
+                    👉 Teljes adatbázis megnyitása
+                </a>
+            </li>
         </ul>
+
+        <!-- Extra kis "feature strip" -->
+        <div class="feature-strip">
+            <span>⚙️ Szűrés & rendezés</span>
+            <span>📊 Interaktív diagramok</span>
+            <span>👤 Felhasználói fiókok</span>
+        </div>
+
     </div>
 
-    <span class="image object">
+    <!-- Jobb oldali kép + overlay -->
+    <span class="image object f1-image">
+        <div class="image-overlay"></div>
         <img th:src="@{/images/f1car.jpg}" alt="Forma 1 autó">
+        <div class="image-caption">
+            <span class="pill">Live the speed</span>
+            <p>Adatokon alapuló Forma–1 élmény.</p>
+        </div>
     </span>
+
 </section>
 
 </body>
